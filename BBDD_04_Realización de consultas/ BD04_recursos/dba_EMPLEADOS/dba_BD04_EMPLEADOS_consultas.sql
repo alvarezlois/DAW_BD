@@ -1,8 +1,8 @@
 --2.1. Obtener los apellidos de los empleados.
-SELECT Apellidos FROM EMPLEADOS
+SELECT Apellidos FROM EMPLEADOS;
 
 --2.2. Obtener los apellidos de los empleados sin repeticiones.
-SELECT DISTINCT Apellidos FROM EMPLEADOS
+SELECT DISTINCT Apellidos FROM EMPLEADOS;
 
 --2.3. Obtener todos los datos de los empleados que se apellidan ’López’.
 SELECT * FROM EMPLEADOS WHERE Apellidos Like ('%Lopez%');
@@ -10,7 +10,7 @@ SELECT * FROM EMPLEADOS WHERE Apellidos Like ('%Lopez%');
 /*2.4. Obtener todos los datos de los empleados que se apellidan ’López’ y los que se
 apellidan ’Pérez’.*/
 /* Con OR */
-	SELECT * FROM EMPLEADOS	WHERE Apellidos like ('%Lopez%') OR Apellidos like ('%Perez%')
+	SELECT * FROM EMPLEADOS	WHERE Apellidos like ('%Lopez%') OR Apellidos like ('%Perez%');
 /* Con IN */
 	SELECT * FROM EMPLEADOS	WHERE Apellidos IN ('Lopez','Perez');
 
@@ -33,52 +33,85 @@ para el departamento d03.*/
 /*2.9. Obtener el numero de empleados en cada departamento.*/
 	SELECT cod_dep, COUNT(*) FROM EMPLEADOS GROUP BY cod_dep;
 	
+	SELECT D.nombre, COUNT(E.DNI)
+	FROM EMPLEADOS E, DEPARTAMENTOS D 
+	WHERE E.cod_dep = D.codigo
+	GROUP BY D.codigo
+	--ORDER BY D.nombre ASC
+	--ORDER BY COUNT(E.DNI) ASC
+	;
 /*2.10. Obtener un listado completo de empleados, incluyendo por cada empleado los datos
 del empleado y de su departamento.*/
-	SELECT * FROM EMPLEADOS INNER JOIN DEPARTAMENTOS ON EMPLEADOS.cod_dep = DEPARTAMENTOS.codigo;
+	SELECT E.DNI, E.nombre AS 'Nome', E.Apellidos AS 'Apelidos', D.codigo AS 'Cód.DEPT', D.nombre AS 'Departamento', D.presupuesto AS 'Orzamento'
+	FROM EMPLEADOS E
+		INNER JOIN DEPARTAMENTOS D ON E.cod_dep = D.codigo
+	;
 	
 /*2.11. Obtener un listado completo de empleados, incluyendo el nombre y apellidos del
 empleado junto al nombre y presupuesto de su departamento.*/
 /* Sin etiquetas */
 	SELECT EMPLEADOS.nombre, apellidos, DEPARTAMENTOS.nombre, presupuesto 
-	FROM EMPLEADOS INNER JOIN DEPARTAMENTOS ON EMPLEADOS.cod_dep = DEPARTAMENTOS.codigo;
+	FROM EMPLEADOS 
+		INNER JOIN DEPARTAMENTOS ON EMPLEADOS.cod_dep = DEPARTAMENTOS.codigo
+	;
 /* Con etiquetas */
 	SELECT E.Nombre, Apellidos, D.Nombre, Presupuesto 
-	FROM EMPLEADOS E INNER JOIN DEPARTAMENTOS D ON E.cod_dep = D.Codigo;
+	FROM EMPLEADOS E 
+		INNER JOIN DEPARTAMENTOS D ON E.cod_dep = D.Codigo
+	;
 
 /*2.12. Obtener los nombres y apellidos de los empleados que trabajen en departamentos
-cuyo presupuesto sea mayor de 20.000 */
+cuyo presupuesto sea mayor de 33.500 */
 /* Sin subconsulta */
-	SELECT EMPLEADOS.Nombre, Apellidos
-	FROM EMPLEADOS INNER JOIN DEPARTAMENTOS ON EMPLEADOS.cod_dep = DEPARTAMENTOS.Codigo
-	AND DEPARTAMENTOS.Presupuesto > 20000;
+	SELECT 
+		E.Nombre as 'Nombre',
+		E.Apellidos as 'Apellidos',
+		D.nombre as 'Departamento',
+		D.presupuesto / (select count(*) from EMPLEADOS group by cod_dep) as 'Presupuesto/Empleado'
+	FROM EMPLEADOS E
+		INNER JOIN DEPARTAMENTOS D ON E.cod_dep = D.Codigo
+	WHERE D.Presupuesto > 33500
+	--AND D.Presupuesto > 33500
+	ORDER BY D.presupuesto ASC
+	;
 /* Con subconsulta */
-	SELECT Nombre, Apellidos FROM EMPLEADOS
-	WHERE cod_dep IN (SELECT Codigo FROM DEPARTAMENTOS WHERE Presupuesto > 20000);
+	SELECT Nombre, Apellidos, cod_dep
+	FROM EMPLEADOS
+	WHERE cod_dep IN
+		(
+		SELECT Codigo FROM DEPARTAMENTOS WHERE Presupuesto > 33500
+		)
+	;
 
 /*2.13. Obtener los datos de los departamentos cuyo presupuesto es superior al presupues-
 to medio de todos los departamentos.*/
-	SELECT * FROM DEPARTAMENTOS 
-	WHERE Presupuesto > (SELECT AVG(Presupuesto) FROM DEPARTAMENTOS);
+	SELECT *
+	FROM DEPARTAMENTOS 
+	WHERE Presupuesto > (SELECT AVG(Presupuesto) FROM DEPARTAMENTOS)
+	;
 
 /*2.14. Obtener los nombres (únicamente los nombres) de los departamentos que tienen
 más de dos empleados.*/
 /* Con subconsulta */
-	SELECT Nombre FROM DEPARTAMENTOS
+	SELECT Nombre 
+	FROM DEPARTAMENTOS
 	WHERE Codigo IN
-	(
-	SELECT cod_dep
-	FROM EMPLEADOS
-	GROUP BY cod_dep
-	HAVING COUNT(*) > 2
-	);
+		(
+		SELECT cod_dep
+		FROM EMPLEADOS
+		GROUP BY cod_dep
+		HAVING COUNT(*) > 2
+		)
+	;
+	
 /* Con UNION. No funciona si dos departamentos
 tienen el mismo nombre */
 	SELECT DEPARTAMENTOS.Nombre
-	FROM EMPLEADOS INNER JOIN DEPARTAMENTOS
-	ON cod_dep = Codigo
+	FROM EMPLEADOS 
+		INNER JOIN DEPARTAMENTOS ON cod_dep = Codigo
 	GROUP BY DEPARTAMENTOS.Nombre
-	HAVING COUNT(*) > 2;
+	HAVING COUNT(*) > 2
+	;
 	
 /*2.15. Añadir un nuevo departamento: ‘Calidad’, con presupuesto de 40.000 ¤ y código
 11. Añadir un empleado vinculado al departamento recién creado: Esther Vázquez,
@@ -102,4 +135,6 @@ sea superior a los 22.000 ¤.*/
 	DELETE FROM EMPLEADOS WHERE cod_dep IN (SELECT codigo FROM DEPARTAMENTOS WHERE presupuesto >= '22000');
 	
 /*2.20. Despedir a todos los empleados.*/
-DELETE FROM EMPLEADOS;
+	DELETE FROM EMPLEADOS;
+/*2.20. Cerrar todos los departamentos.*/
+	DELETE FROM DEPARTAMENTOS;
