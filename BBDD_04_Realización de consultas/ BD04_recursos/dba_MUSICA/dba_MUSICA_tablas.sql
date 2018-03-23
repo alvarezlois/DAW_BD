@@ -10,19 +10,19 @@ CREATE TABLE `musica`.`GRUPO` (
   `pais` VARCHAR(45) NULL,
   PRIMARY KEY (`cod`));
 
-CREATE TABLE club (
-cod CHAR(3) CONSTRAINT PK_club PRIMARY KEY,
-nombre VARCHAR2(30) NOT NULL,
-sede VARCHAR2(30),
-num NUMBER(6),
-cod_gru CHAR(3) NOT NULL CONSTRAINT FK_club_grupo REFERENCES grupo (cod));
-
 CREATE TABLE companhia (
 cod CHAR(3) CONSTRAINT PK_compa PRIMARY KEY,
 nombre VARCHAR2(30) NOT NULL,
 dir VARCHAR2(30),
 fax VARCHAR2(15),
 tfno VARCHAR2(15) );
+
+CREATE TABLE club (
+cod CHAR(3) CONSTRAINT PK_club PRIMARY KEY,
+nombre VARCHAR2(30) NOT NULL,
+sede VARCHAR2(30),
+num NUMBER(6),
+cod_gru CHAR(3) NOT NULL CONSTRAINT FK_club_grupo REFERENCES grupo (cod));
 
 
 CREATE TABLE cancion (

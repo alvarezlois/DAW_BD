@@ -1,16 +1,16 @@
 
-create table almacenes (
-	codigo VARCHAR(3),
-	lugar VARCHAR(50) not null unique,
-	capacidad VARCHAR(6),
-	primary key (codigo)
-	);
+CREATE TABLE almacenes(
+codigo VARCHAR( 10 ) ,
+lugar VARCHAR( 100 ) NOT NULL UNIQUE ,
+capacidad VARCHAR( 10 ) ,
+PRIMARY KEY ( codigo )
+);
 
-create table cajas
-	numRef VARCHAR(5),
-	contenido VARCHAR(100) not null,
-	valor VARCHAR(5),
-	almacen VARCHAR (6),
-	primary key (numRef),
-	foreign key (almacen) references almacenes(codigo)
-	);
+CREATE TABLE  `cajas` (
+ `numRef` VARCHAR( 10 ) NOT NULL ,
+ `contenido` VARCHAR( 100 ) NOT NULL ,
+ `valor` VARCHAR( 10 ) NOT NULL ,
+ `almacen` VARCHAR( 10 ) NOT NULL ,
+PRIMARY KEY ( numRef ) ,
+FOREIGN KEY ( almacen ) REFERENCES almacenes( codigo )
+) ENGINE = INNODB DEFAULT CHARSET = utf8mb4

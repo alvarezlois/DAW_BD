@@ -29,13 +29,13 @@ select * from artista;
 /* insertamos os grupos */
 /*						*/
 
---insertamos o grupo ALGIERS
+-- insertamos o grupo ALGIERS
 	insert into grupo values ('g01','ALGIERS','01/01/2001','USA'); 
---insertamos o grupo SLOWDIVE
+-- insertamos o grupo SLOWDIVE
 	insert into grupo values ('g02','SLOWDIVE','11/01/2001','UK'); 
---insertamos o grupo RIDE
+-- insertamos o grupo RIDE
 	insert into grupo values ('g03','RIDE','21/01/2001','ESCOCIA'); 
---insertamos o grupo X
+-- insertamos o grupo X
 	insert into grupo values ('g04','SINGLE','22/02/2001','ESPAÑA'); 
 	insert into grupo values ('g05','LA PLATA','23/02/2001','ESPAÑA'); 
 	insert into grupo values ('g06','SIERRA','24/02/2001','ESPAÑA'); 
@@ -93,19 +93,19 @@ where (artista.dni = pertenece.dni and pertenece.cod = grupo.cod);
 /*						*/
 
 -- insertamos o discos de ALGIERS algiers
-	insert into disco values ('disc01','Algiers','02/06/2017','k01','g01');
+	insert into disco values ('LP01','Algiers','02/06/2017','k01','g01');
 -- insertamos o discos de SLOWDIVE slowdive
-	insert into disco values ('disc02','Slowdive','05/05/2017','k02','g02');
+	insert into disco values ('LP02','Slowdive','05/05/2017','k02','g02');
 -- insertamos o discos de RIDE weather diaries
-	insert into disco values ('disc03','The Weather Diaries','16/06/2017','k03','g03');
+	insert into disco values ('LP03','The Weather Diaries','16/06/2017','k03','g03');
 -- insertamos o discos de X
-	insert into disco values ('disc04','Mapas del Océano','16/02/2018','k04', 'g04');
-	insert into disco values ('disc05','Mapas del Cielo','16/02/2017','k05', 'g04');
-	insert into disco values ('disc06','Desorden','16/02/2018','k06', 'g05');
-	insert into disco values ('disc07','A Ninguna Parte','20/10/2017','k06', 'g06');
-	insert into disco values ('disc08','After Shave','18/05/1996','k05', 'g07');
-	insert into disco values ('disc09','Cosmic EP','28/09/1995','k05', 'g07');
-	insert into disco values ('disc10','Pygmalion','06/02/1995','k07', 'g02');
+	insert into disco values ('LP04','Mapas del Océano','16/02/2018','k04', 'g04');
+	insert into disco values ('LP05','Mapas del Cielo','16/02/2017','k05', 'g04');
+	insert into disco values ('LP06','Desorden','16/02/2018','k06', 'g05');
+	insert into disco values ('LP07','A Ninguna Parte','20/10/2017','k06', 'g06');
+	insert into disco values ('LP08','After Shave','18/05/1996','k05', 'g07');
+	insert into disco values ('LP09','Cosmic EP','28/09/1995','k05', 'g07');
+	insert into disco values ('LP10','Pygmalion','06/02/1995','k07', 'g02');
 
 /*						  			 */
 /* insertamos as cancions dos discos */
@@ -136,21 +136,21 @@ select * from cancion;
 /*														    */
 
 -- insertamos as cancions no disco01 */
-	insert into esta values ('c01', 'disc01');
-	insert into esta values ('c02', 'disc01');
-	insert into esta values ('c03', 'disc01');
-	insert into esta values ('c04', 'disc01');
+	insert into esta values ('c01', 'LP01');
+	insert into esta values ('c02', 'LP01');
+	insert into esta values ('c03', 'LP01');
+	insert into esta values ('c04', 'LP01');
 
 -- insertamos as cancions no disco02
-	insert into esta values ('c11', 'disc02');
-	insert into esta values ('c12', 'disc02');
-	insert into esta values ('c13', 'disc02');
-	insert into esta values ('c14', 'disc02');
+	insert into esta values ('c11', 'LP02');
+	insert into esta values ('c12', 'LP02');
+	insert into esta values ('c13', 'LP02');
+	insert into esta values ('c14', 'LP02');
 
 -- insertamos as cancions no disco03
-	insert into esta values ('c21', 'disc03');
-	insert into esta values ('c22', 'disc03');
-	insert into esta values ('c23', 'disc03');
-	insert into esta values ('c24', 'disc03');
+	insert into esta values ('c21', 'LP03');
+	insert into esta values ('c22', 'LP03');
+	insert into esta values ('c23', 'LP03');
+	insert into esta values ('c24', 'LP03');
 
 
