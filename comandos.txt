@@ -1,0 +1,61 @@
+lsb_release -a
+
+####################INSTALAR APACHE####################
+apt-get install apache2 
+
+/etc/init.d/apache2 restart
+
+####################INSTALAR PHP7.0####################
+gedit /etc/apt/sources.list
+
+deb http://packages.dotdeb.org jessie all
+deb-src http://packages.dotdeb.org jessie all
+
+
+wget https://www.dotdeb.org/dotdeb.gpg
+
+apt-key add dotdeb.gpg
+
+apt-get update
+
+apt-get install php7.0 php7.0-common php7.0-mysql php7.0-mbstring php7.0-curl php7.0-mcrypt php7.0-sqlite3 php-pear
+
+apt-get install libapache2-mod-php7.0
+
+/etc/init.d/apache2 restart
+
+
+gedit /var/www/html/info.php
+
+<?php
+phpinfo();
+?>
+
+####################INSTALAR MYSQL####################
+apt-get install mysql-server
+
+mysql -u root-p
+
+####################INSTALAR PHPMYADMIN####################
+cd /usr/share
+
+wget https://files.phpmyadmin.net/phpMyAdmin/4.5.4.1/phpMyAdmin-4.5.4.1-all-languages.zip
+
+unzip phpMyAdmin-4.5.4.1-all-languages.zip
+
+mv phpMyAdmin-4.5.4.1-all-languages phpmyadmin
+
+chmod -R 0755 phpmyadmin
+
+gedit /etc/apache2/sites-available/000-default.conf
+
+Alias /phpmyadmin "/usr/share/phpmyadmin/"
+<Directory "/usr/share/phpmyadmin/">
+     Order allow,deny
+     Allow from all
+     Require all granted
+</Directory>
+
+
+/etc/init.d/apache2 restart
+
